@@ -25,7 +25,8 @@ SECRET_KEY = '6jx$o((8@(^9hs))-=s6)hi6x!%=0p+0wl25tdi6=e!7)m-jq-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['0.0.0.0',
+    '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #third party
+    'rest_framework',
+
+
+    #created
+    'store',
+    'warehouse'
 ]
 
 MIDDLEWARE = [
@@ -80,8 +89,17 @@ DATABASES = {
         'USER': 'postgres',
         'HOST': 'store_db',
         'PORT': 5432,
+    },
+    'warehouse': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'warehouse_db',
+        'PORT': 5432,
     }
 }
+
+DATABASE_ROUTERS = ['warehouse.router.WarehouseRouter',]
 
 
 # Password validation
