@@ -6,7 +6,8 @@ class Order(models.Model):
     amount = models.IntegerField(null=False)
     price = models.FloatField(null=False)
     comment = models.TextField(null=True)
-    created_at = models.DateTimeField(null=False, auto_now=True)
+    created_at = models.DateTimeField(null=False, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):

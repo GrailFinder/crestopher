@@ -5,13 +5,13 @@ class WarehouseRouter:
     A router to control operations in warehouse app
     """
     def db_for_read(self, model, **hints):
-        if model.meta.app_label == 'warehouse':
+        if model._meta.app_label == 'warehouse':
             return 'warehouse_db'
 
     def db_for_write(self, model, **hints):
-        if model.meta.app_label == 'warehouse':
+        if model._meta.app_label == 'warehouse':
             return 'warehouse_db'
     
-    def allow_migrate(self, model, **hints):
-        if model.meta.app_label == 'warehouse':
+    def allow_migrate(self, db, app_label, model_name=None, **hints):
+        if app_label == 'warehouse':
             return 'warehouse_db'
