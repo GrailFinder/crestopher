@@ -5,11 +5,19 @@ services:
   store_db:
     container_name: store_db
     image: postgres
+    ports:
+      - "54321:5432"
+    volumes:
+     - ./postgres-data:/var/lib/postgresql/data
 
 
   warehouse_db:
     container_name: warehouse_db
     image: postgres
+    ports:
+      - "54322:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
 
   crestopher:
     build: .
