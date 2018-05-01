@@ -18,7 +18,7 @@ services:
   crestopher:
     build: .
     container_name: crestopher
-    command: [sh, -c, "python3 manage.py runserver 0.0.0.0:8000 & nameko run --config broker_config.yml warehouse.service"]
+    command: [sh, -c, "gunicorn -b=0.0.0.0:8000 crestopher.wsgi & nameko run --config broker_config.yml warehouse.service"]
     volumes:
       - .:/code
     environment:
