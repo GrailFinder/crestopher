@@ -7,8 +7,6 @@ services:
     image: postgres
     ports:
       - "54321:5432"
-    volumes:
-     - ./postgres-data:/var/lib/postgresql/data
 
 
   warehouse_db:
@@ -16,17 +14,26 @@ services:
     image: postgres
     ports:
       - "54322:5432"
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
 
   crestopher:
     build: .
     container_name: crestopher
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: [sh, -c, "python3 manage.py runserver 0.0.0.0:8000 & nameko run --config broker_config.yml warehouse.service"]
     volumes:
       - .:/code
+    environment:
+     - PYTHONUNBUFFERED=1
     ports:
       - "8000:8000"
     depends_on:
       - store_db
       - warehouse_db
+      - broker
+
+  broker:
+    container_name: broker
+    image: rabbitmq:3.6-management
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+    restart: always
