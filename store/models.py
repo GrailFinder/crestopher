@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 import uuid
+from warehouse.tasks import sync_order
 
 class Order(models.Model):
     id = models.CharField(max_length=128, null=False, unique=True, primary_key=True, default=uuid.uuid1)
@@ -15,21 +16,10 @@ class Order(models.Model):
         return f'{self.id}: {self.created_at}'
 
 
-from nameko.standalone.rpc import ClusterRpcProxy
-
-config = {
-    'AMQP_URI': "pyamqp://guest:guest@broker"
-}
-
 def sync_sign(sender, instance, created, *args, **kwargs):
     # make rpc call
     print(sender, instance, created)
-    with ClusterRpcProxy(config) as cluster_rpc:
-        order_dict = instance.__dict__
-        order_dict.pop('_state')
-        order_dict['created_at'] = order_dict['created_at'].timestamp()
-        order_dict['updated_at'] = order_dict['updated_at'].timestamp()
-        print('order dict:', order_dict)
-        cluster_rpc.sync.sync_order(order_dict, created)
+    di = {"id": instance.id}
+    sync_order.delay(di)
 
 post_save.connect(sync_sign, sender=Order)

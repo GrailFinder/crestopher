@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 import uuid
 
+
 class Order(models.Model):
     id = models.CharField(max_length=128, null=False, unique=True, primary_key=True, default=uuid.uuid1)
     amount = models.IntegerField(null=False)
@@ -33,3 +34,29 @@ class Order(models.Model):
 #         cluster_rpc.sync.sync_order(order_dict, created)
 
 # post_save.connect(sync_sign, sender=Order)
+
+
+
+# from nameko.rpc import rpc
+# from urllib import request as req
+# from datetime import datetime
+# import time
+# class OrderSyncService:
+#     name = 'sync'
+#     @rpc
+#     def sync_order(self, order, created):
+#         if created:
+#             # add to db
+#             print(order)
+#             time.sleep(10)
+#             print('done waiting')
+#             has_it = Order.objects.filter(id=order['id'])
+#             if not has_it:
+#                 new_order = Order(id=order['id'], amount=order['amount'], price=order['price'],
+#                 comment=order['comment'], created_at=datetime.fromtimestamp(order['created_at']),
+#                 updated_at=datetime.fromtimestamp(order['updated_at']))
+#                 new_order.save()
+#         else:
+#             # make http request to get data?
+#             resp = req.urlopen(f"0.0.0.0:8000/store/orders/{order['id']}").read().decode("utf-8")
+#             print(resp)
