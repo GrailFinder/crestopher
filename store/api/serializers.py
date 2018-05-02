@@ -11,4 +11,6 @@ class OrderSerializer(ModelSerializer):
             'price',
             'comment',
             'created_at',
+            'updated_at',
+            'status',
         ]

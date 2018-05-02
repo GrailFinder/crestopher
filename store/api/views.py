@@ -6,3 +6,6 @@ class OrderListView(ListAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
+class OrderRetrieveView(RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
