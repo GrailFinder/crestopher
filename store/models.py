@@ -16,11 +16,14 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.id}: {self.created_at}'
 
+    class Meta:
+        app_label = 'store'
+
 
 def sync_sign(sender, instance, created, *args, **kwargs):
     # make rpc call
     print(sender, instance, created)
-    di = {"id": instance.id}
+    di = {"id": instance.id, "updated_at": instance.updated_at}
     sync_order.delay(di)
 
 post_save.connect(sync_sign, sender=Order)

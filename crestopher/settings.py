@@ -83,7 +83,8 @@ WSGI_APPLICATION = 'crestopher.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {},
+    'store': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
@@ -99,7 +100,7 @@ DATABASES = {
     }
 }
 
-DATABASE_ROUTERS = ['warehouse.router.WarehouseRouter',]
+DATABASE_ROUTERS = ['warehouse.router.WarehouseRouter', 'store.router.StoreRouter']
 
 
 # Password validation
