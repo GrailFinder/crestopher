@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
     #created
     'store',
-    'warehouse'
+    'warehouse',
 ]
 
 MIDDLEWARE = [

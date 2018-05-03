@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 import uuid
-from warehouse.sync_order import sync_order
+from warehouse.tasks import sync_order
 
 class Order(models.Model):
     id = models.CharField(max_length=128, null=False, unique=True, primary_key=True, default=uuid.uuid1)
@@ -14,7 +14,8 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f'{self.id}: {self.status}'
+        return f'{self.id}: {self.created_at}'
+
 
 def sync_sign(sender, instance, created, *args, **kwargs):
     # make rpc call
