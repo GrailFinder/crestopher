@@ -15,7 +15,7 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f'{self.id}: {self.created_at}'
+        return f'{self.id}: {self.status}'
 
     class Meta:
         app_label = 'warehouse'
