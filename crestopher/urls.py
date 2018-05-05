@@ -19,7 +19,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('store/', include('store.urls'))
+    path('store/', include('store.urls')),
+    path('warehouse/', include('warehouse.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()  # https://stackoverflow.com/questions/12800862/how-to-make-django-serve-static-files-with-gunicorn
