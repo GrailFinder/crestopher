@@ -10,7 +10,7 @@ In other words warehouse_order updates store_order on any update, when store_ord
 
 ## Problems of two way sync that have been resolved by this solution
 #### When to update:
-First issue to resolve is the moment of synchronization. For example it might be resolved by some schedular module that calls for update every N minutes. But that way there would be always risk of getting not updated data in requests
+First issue to resolve is the moment of synchronization. For example it might be resolved by some schedular module that calls for update every N minutes. But in that case there would be always risk of getting not updated data
 
 So right moment is right after create/update (current solution)
 
